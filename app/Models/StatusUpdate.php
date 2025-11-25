@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class StatusUpdate extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'shipment_id',
+        'location',
+        'description',
+        'status',
+        'happened_at',
+    ];
+
+    // Pastikan kolom 'happened_at' dibaca sebagai format Tanggal yang benar oleh sistem
+    protected $casts = [
+        'happened_at' => 'datetime',
+    ];
+
+    protected function statusLabel(): Attribute
+    {
+        return Attribute::get(
+            fn (): string => trans('statuses.' . ($this->status ?? 'pending')),
+        );
+    }
+
+    // Relasi: Status ini milik SIAPA? Milik Shipment.
+    public function shipment(): BelongsTo
+    {
+        return $this->belongsTo(Shipment::class);
+    }
+}
