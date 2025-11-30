@@ -18,12 +18,16 @@ Route::get('/setup-database', function () {
         // 1. Jalankan Migrasi (Force karena production)
         Artisan::call('migrate', ["--force" => true]);
         $output = Artisan::output();
+
+        // 2. Jalankan Seeder (Untuk isi data awal user admin)
+        Artisan::call('db:seed', ["--force" => true]);
+        $output .= "\n" . Artisan::output();
         
-        // 2. Clear Cache (Opsional, biar fresh)
+        // 3. Clear Cache (Opsional, biar fresh)
         Artisan::call('optimize:clear');
         $output .= "\n" . Artisan::output();
 
-        return "<pre>BERHASIL! Database sudah dibuat.\n\nLog:\n$output</pre>";
+        return "<pre>BERHASIL! Database sudah dibuat dan diisi data awal.\n\nLog:\n$output</pre>";
     } catch (\Exception $e) {
         return "<pre>GAGAL:\n" . $e->getMessage() . "</pre>";
     }
