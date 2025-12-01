@@ -12,6 +12,7 @@ use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\ViewField;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -128,14 +129,10 @@ class ShipmentResource extends Resource
                                     ->label('Catatan Kurir')
                                     ->rows(2)
                                     ->columnSpanFull(),
-                                FileUpload::make('proof_of_delivery')
+                                ViewField::make('proof_of_delivery')
                                     ->label('Bukti Foto (POD)')
-                                    ->image()
-                                    ->disk('s3')
-                                    ->directory('pod-images')
-                                    ->visibility('public')
+                                    ->view('filament.forms.components.base64-upload')
                                     ->columnSpanFull()
-                                    ->nullable()
                                     ->visible(fn ($get) => $get('status') === 'delivered'),
                                 DateTimePicker::make('happened_at')
                                     ->label('Waktu Terjadi')
