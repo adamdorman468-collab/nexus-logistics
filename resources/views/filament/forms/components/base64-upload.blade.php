@@ -1,5 +1,5 @@
 <div x-data="{
-    state: $wire.$entangle('{{ $getStatePath() }}'),
+    state: $wire.$entangle('data.proof_of_delivery'),
     isDragging: false,
     handleFile(event) {
         const file = event.target.files ? event.target.files[0] : null;

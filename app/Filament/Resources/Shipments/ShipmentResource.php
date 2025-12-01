@@ -129,11 +129,18 @@ class ShipmentResource extends Resource
                                     ->label('Catatan Kurir')
                                     ->rows(2)
                                     ->columnSpanFull(),
-                                ViewField::make('proof_of_delivery')
+                                Textarea::make('proof_of_delivery')
                                     ->label('Bukti Foto (POD)')
+                                    ->rows(3)
+                                    ->columnSpanFull()
+                                    ->hidden()
+                                    ->dehydrated()
+                                    ->visible(fn ($get) => $get('status') === 'delivered'),
+                                ViewField::make('pod_display')
+                                    ->label('')
                                     ->view('filament.forms.components.base64-upload')
                                     ->columnSpanFull()
-                                    ->dehydrated()
+                                    ->dehydrated(false)
                                     ->visible(fn ($get) => $get('status') === 'delivered'),
                                 DateTimePicker::make('happened_at')
                                     ->label('Waktu Terjadi')
