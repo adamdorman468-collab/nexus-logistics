@@ -129,31 +129,11 @@ class ShipmentResource extends Resource
                                     ->label('Catatan Kurir')
                                     ->rows(2)
                                     ->columnSpanFull(),
-                                FileUpload::make('proof_of_delivery')
+                                ViewField::make('proof_of_delivery')
                                     ->label('Bukti Foto (POD)')
-                                    ->image()
-                                    ->imageEditor()
-                                    ->imageEditorAspectRatios([
-                                        null,
-                                        '16:9',
-                                        '4:3',
-                                        '1:1',
-                                    ])
-                                    ->disk('public')
-                                    ->directory('pod-images')
-                                    ->visibility('public')
-                                    ->maxSize(2048)
+                                    ->view('filament.forms.components.base64-file-upload')
                                     ->columnSpanFull()
-                                    ->visible(fn ($get) => $get('status') === 'delivered')
-                                    ->saveUploadedFileUsing(function ($file, $state) {
-                                        // Convert uploaded file to Base64
-                                        $fileContent = file_get_contents($file->getRealPath());
-                                        $base64 = 'data:' . $file->getMimeType() . ';base64,' . base64_encode($fileContent);
-                                        return $base64;
-                                    })
-                                    ->getUploadedFileNameForStorageUsing(function () {
-                                        return null; // Don't save to disk
-                                    }),
+                                    ->visible(fn ($get) => $get('status') === 'delivered'),
                                 DateTimePicker::make('happened_at')
                                     ->label('Waktu Terjadi')
                                     ->seconds(false)
