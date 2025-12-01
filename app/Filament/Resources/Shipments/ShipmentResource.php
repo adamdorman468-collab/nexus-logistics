@@ -133,6 +133,7 @@ class ShipmentResource extends Resource
                                     ->label('Bukti Foto (POD)')
                                     ->view('filament.forms.components.base64-upload')
                                     ->columnSpanFull()
+                                    ->dehydrated()
                                     ->visible(fn ($get) => $get('status') === 'delivered'),
                                 DateTimePicker::make('happened_at')
                                     ->label('Waktu Terjadi')
