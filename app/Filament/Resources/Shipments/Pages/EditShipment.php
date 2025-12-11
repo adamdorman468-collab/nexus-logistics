@@ -14,11 +14,6 @@ class EditShipment extends EditRecord
     {
         return [
             Actions\DeleteAction::make(),
-            Actions\Action::make('label_preview')
-                ->label('Label Preview')
-                ->icon('heroicon-o-printer')
-                ->url(fn () => route('labels.download', ['tracking' => $this->record->tracking_number]))
-                ->openUrlInNewTab(true),
         ];
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\TrackingController;
-use App\Http\Controllers\CarrierController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan; // Tambahan untuk migrasi
 
@@ -38,11 +37,3 @@ Route::get('/setup-database', function () {
         return "<pre>GAGAL:\n" . $e->getMessage() . "\n\nTrace:\n" . $e->getTraceAsString() . "</pre>";
     }
 });
-
-// Carrier / label demo routes (JNE stub)
-Route::post('/carriers/jne/shipments', [CarrierController::class, 'create'])
-    ->middleware('throttle:20,1')
-    ->name('carriers.jne.create');
-
-Route::get('/labels/{tracking}', [CarrierController::class, 'downloadLabel'])
-    ->name('labels.download');
