@@ -15,12 +15,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Admin user (can be used to login to admin panel)
         User::factory()->create([
             'name' => 'Admin User',
             'email' => 'admin@nexus.com',
             'password' => bcrypt('password'),
         ]);
 
+        // Create several demo users for demonstration (customers/operators)
+        User::factory()->count(4)->create();
+
+        // Seed demo shipments and status updates
         $this->call(LogisticsDemoSeeder::class);
+
+        // Additional shipments to populate list views and cards
+        \App\Models\Shipment::factory()->count(8)->create();
     }
 }
