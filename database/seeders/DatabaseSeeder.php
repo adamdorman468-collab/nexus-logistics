@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,8 +18,8 @@ class DatabaseSeeder extends Seeder
     {
         User::factory()->create([
             'name' => 'Admin User',
-            'email' => 'admin@nexus.com',
-            'password' => bcrypt('password'),
+            'email' => 'admin@nexuslogistics.com',
+            'password' => Hash::make('NexusAdmin123!'),
         ]);
 
         $this->call(LogisticsDemoSeeder::class);

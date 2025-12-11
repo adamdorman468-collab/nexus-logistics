@@ -9,6 +9,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Tables\Actions\Action as TableAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
@@ -206,6 +207,16 @@ class ShipmentResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->recordActions([
                 ViewAction::make()->label('Detail'),
+                TableAction::make('label_preview')
+                    ->label('Label Preview')
+                    ->icon('heroicon-o-printer')
+                    ->url(fn (Shipment $record): string => route('labels.download', ['tracking' => $record->tracking_number]))
+                    ->openUrlInNewTab(true),
+                TableAction::make('label_pdf')
+                    ->label('Download PDF')
+                    ->icon('heroicon-o-document-download')
+                    ->url(fn (Shipment $record): string => route('labels.download', ['tracking' => $record->tracking_number, 'pdf' => 1]))
+                    ->openUrlInNewTab(true),
                 EditAction::make(),
                 DeleteAction::make(),
             ])
